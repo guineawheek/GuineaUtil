@@ -1,4 +1,4 @@
-package com.myname.mymodid;
+package io.github.guineawheek.guineautil;
 
 import cpw.mods.fml.common.event.*;
 

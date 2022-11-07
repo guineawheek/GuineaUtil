@@ -1,4 +1,4 @@
-package com.myname.mymodid;
+package io.github.guineawheek.guineautil;
 
 import java.io.File;
 import net.minecraftforge.common.config.Configuration;
