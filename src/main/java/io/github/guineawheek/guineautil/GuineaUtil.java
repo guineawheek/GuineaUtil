@@ -3,6 +3,8 @@ package io.github.guineawheek.guineautil;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
+import io.github.guineawheek.guineautil.cmd.GUtilCommand;
+import io.github.guineawheek.guineautil.dump.RecipeDump;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +15,10 @@ public class GuineaUtil {
 
     @SidedProxy(clientSide = Tags.GROUPNAME + ".ClientProxy", serverSide = Tags.GROUPNAME + ".CommonProxy")
     public static CommonProxy proxy;
+
+    public static RecipeDump recipeDump;
+
+    public static final boolean DEBUG = false;
 
     @Mod.EventHandler
     // preInit "Run before anything else. Read your config, create blocks, items,
@@ -36,11 +42,13 @@ public class GuineaUtil {
     @Mod.EventHandler
     public void serverAboutToStart(FMLServerAboutToStartEvent event) {
         proxy.serverAboutToStart(event);
+        recipeDump = new RecipeDump();
     }
 
     @Mod.EventHandler
     // register server commands in this event handler
     public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new GUtilCommand());
         proxy.serverStarting(event);
     }
 
