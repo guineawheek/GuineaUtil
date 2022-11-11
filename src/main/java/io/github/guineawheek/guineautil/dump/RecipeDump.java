@@ -24,6 +24,9 @@ public class RecipeDump {
         dumpers.add(new VanillaSmeltingDumper());
         dumpers.add(new VanillaBrewingDumper());
         dumpers.add(new GregTechDumper());
+        dumpers.add(new GregTechAsslineDumper());
+        dumpers.add(new GTPPSpargingDumper());
+        dumpers.add(new GTPPDecayableDumper());
 
     }
     public void dump(ICommandSender ics) {

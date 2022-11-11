@@ -2,17 +2,14 @@ package io.github.guineawheek.guineautil.dump.handlers;
 
 import codechicken.nei.recipe.ICraftingHandler;
 import gregtech.api.util.GT_Recipe;
-import gregtech.nei.GT_NEI_DefaultHandler;
+import gregtech.nei.GT_NEI_AssLineHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Map;
-
-public class GregTechDumper implements IRecipeDumper {
+public class GregTechAsslineDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
@@ -20,17 +17,16 @@ public class GregTechDumper implements IRecipeDumper {
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
-        return handler instanceof GT_NEI_DefaultHandler;
+        return handler instanceof GT_NEI_AssLineHandler;
     }
 
     @Override
     public JSONObject dump(ICraftingHandler handler) {
-        GT_NEI_DefaultHandler gtHandler = (GT_NEI_DefaultHandler) handler;
+        GT_NEI_AssLineHandler gtHandler = (GT_NEI_AssLineHandler) handler;
 
         JSONArray allRecipes = new JSONArray();
-        for (GT_NEI_DefaultHandler.CachedDefaultRecipe cdrecipe : gtHandler.getCache()) {
+        for (GT_Recipe recipe : gtHandler.getSortedRecipes()) {
             JSONObject jsonRecipe = new JSONObject();
-            GT_Recipe recipe = cdrecipe.mRecipe;
             jsonRecipe.put("EU/t", recipe.mEUt); // EU/t
             jsonRecipe.put("duration", recipe.mDuration); // base duration
             jsonRecipe.put("fake", recipe.mFakeRecipe); // whether the recipe is just for NEI display
@@ -85,7 +81,7 @@ public class GregTechDumper implements IRecipeDumper {
             jsonRecipe.put("fluidInputs", jsonFluidInputs);
 
             JSONArray jsonFluidOutputs = new JSONArray();
-            for (FluidStack outputFluid : recipe.mFluidOutputs) {
+            for (FluidStack outputFluid : recipe.mFluidInputs) {
                 if (outputFluid == null || outputFluid.getFluid() == null) break;
                 jsonFluidOutputs.put(JSONUtil.encodeFluidStack(outputFluid));
             }
