@@ -1,6 +1,7 @@
 package io.github.guineawheek.guineautil.dump.handlers;
 
 import codechicken.nei.recipe.ICraftingHandler;
+import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.nei.GT_NEI_DefaultHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
@@ -9,6 +10,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import scala.util.parsing.json.JSON;
 
 import java.util.Map;
 
@@ -60,7 +62,7 @@ public class GregTechDumper implements IRecipeDumper {
             for (int i = 0; i < recipe.mInputs.length; i++) {
                 ItemStack input = recipe.mInputs[i];
                 if (input == null) continue;
-                jsonInputs.put(JSONUtil.encodeItemStack(input));
+                jsonInputs.put(new JSONArray(JSONUtil.encodeItemStackList(GT_OreDictUnificator.getNonUnifiedStacks(input))));
             }
             jsonRecipe.put("inputs", jsonInputs);
 

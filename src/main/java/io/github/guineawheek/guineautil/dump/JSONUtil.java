@@ -51,6 +51,13 @@ public class JSONUtil {
         return out;
     }
 
+    public static JSONArray encodeItemStackList(List<ItemStack> stacks) {
+        JSONArray out = new JSONArray();
+        for (ItemStack stack : stacks)
+            out.put(encodeItemStack(stack));
+        return out;
+    }
+
     public static JSONObject encodeFluidStack(FluidStack stack) {
         return new JSONObject()
             .put("name", stack.getFluid().getName())

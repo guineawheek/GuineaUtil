@@ -54,10 +54,20 @@ public class GregTechAsslineDumper implements IRecipeDumper {
 
             JSONArray jsonInputs = new JSONArray();
             for (int i = 0; i < recipe.mInputs.length; i++) {
-                ItemStack input = recipe.mInputs[i];
+                Object input;
+                if (recipe instanceof GT_Recipe.GT_Recipe_WithAlt) {
+                    input = ((GT_Recipe.GT_Recipe_WithAlt) recipe).getAltRepresentativeInput(i);
+                } else {
+                    input = recipe.mInputs[i];
+                }
                 if (input == null) continue;
-                jsonInputs.put(JSONUtil.encodeItemStack(input));
+                if (input instanceof ItemStack[]) {
+                    jsonInputs.put(JSONUtil.encodeItemStackArray((ItemStack[]) input));
+                } else {
+                    jsonInputs.put(JSONUtil.encodeItemStack((ItemStack) input));
+                }
             }
+
             jsonRecipe.put("inputs", jsonInputs);
 
             JSONArray jsonOutputs = new JSONArray();
