@@ -4,7 +4,7 @@ import codechicken.nei.recipe.ICraftingHandler;
 import fox.spiteful.avaritia.compat.nei.ExtremeShapedRecipeHandler;
 import fox.spiteful.avaritia.compat.nei.ExtremeShapelessRecipeHandler;
 
-public class AvaritiaXtremeCraftingDumper extends VanillaCraftingDumper {
+public class AvaritiaXtremeCraftingDumper extends TemplateRecipeHandlerDumper {
     @Override
     public String getDumperId() {
         return "avaritia_xtreme";

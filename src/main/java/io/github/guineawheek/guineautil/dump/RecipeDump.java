@@ -1,5 +1,6 @@
 package io.github.guineawheek.guineautil.dump;
 
+import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.common.Loader;
 import io.github.guineawheek.guineautil.Config;
 import net.minecraft.command.ICommandSender;
@@ -60,18 +61,20 @@ public class RecipeDump {
             dumpers.add(new AE2CraftingDumper());
         }
 
+        if (Config.dumpAllTemplates) {
+            GuineaUtil.info("load fallback template dumper");
+            dumpers.add(new TemplateRecipeHandlerDumper() {
+                @Override
+                public boolean claim(ICraftingHandler handler) {
+                    return handler instanceof TemplateRecipeHandler;
+                }
+            });
+
+        }
+
+
     }
     public void dump(ICommandSender ics) {
-        /*
-        Shaped Crafting,codechicken.nei.recipe.ShapedRecipeHandler,crafting,Minecraft,1xtile.workbench@0
-        Shapeless Crafting,codechicken.nei.recipe.ShapelessRecipeHandler,crafting,Minecraft,1xtile.workbench@0
-        Fireworks,codechicken.nei.recipe.FireworkRecipeHandler,crafting,Minecraft,1xitem.fireworks@0
-        Smelting,codechicken.nei.recipe.FurnaceRecipeHandler,smelting,Minecraft,1xtile.furnace@0
-        Brewing,codechicken.nei.recipe.BrewingRecipeHandler,brewing,Minecraft,1xitem.brewingStand@0
-        Fuel,codechicken.nei.recipe.FuelRecipeHandler,fuel,Minecraft,Unknown
-        Usage Profiling,codechicken.nei.recipe.ProfilerRecipeHandler,null,Unknown,Unknown
-
-         */
 
         List<ICraftingHandler> handlers = GuiCraftingRecipe.craftinghandlers;
         //List<ICraftingHandler> serialHandlers = GuiCraftingRecipe.serialCraftingHandlers;
@@ -96,11 +99,11 @@ public class RecipeDump {
                         e.printStackTrace();
                     }
                     ics.addChatMessage(new ChatComponentText("successfully dumped " + handler.getHandlerId() + " (" + handler.getRecipeName() + ")"));
+                    break;
                 }
             }
 
             if (!dumped) GuineaUtil.info("Unclaimed: " + handler.getHandlerId() + " " + handler.getRecipeName());
-
         }
 
 

@@ -4,7 +4,7 @@ import codechicken.nei.recipe.ICraftingHandler;
 import ic2.neiIntegration.core.recipehandler.AdvRecipeHandler;
 import ic2.neiIntegration.core.recipehandler.AdvShapelessRecipeHandler;
 
-public class IC2CraftingDumper extends VanillaCraftingDumper {
+public class IC2CraftingDumper extends TemplateRecipeHandlerDumper {
     @Override
     public String getDumperId() {
         return "shaped_ic2_crafting";

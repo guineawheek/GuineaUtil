@@ -12,21 +12,23 @@
  - Decayable Recipes
  - LFTR Gas Sparging
 
+* TC Shaped/Shapeless Worktable
+* TC Crucible
+* TC Infusion
+
 # TODO:
 
 * Forestry
  - Bee outputs
  - Bee breeding tree?
+ - Machines
 
 * Avaritia
  - Extreme Shaped/Shapeless
  - Compression
 
 
-* TC Shaped/Shapeless Worktable
-* TC Crucible
-* TC Infusion
-* TC Aspects...?
+* TC Aspects...? (basically run a thaumometer over every single NEI item)
 
 # Maybe do?
 
