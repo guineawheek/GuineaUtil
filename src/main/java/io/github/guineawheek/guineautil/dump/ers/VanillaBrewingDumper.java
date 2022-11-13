@@ -1,15 +1,11 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.recipe.BrewingRecipeHandler;
 import codechicken.nei.recipe.ICraftingHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class VanillaBrewingDumper implements IRecipeDumper {
 

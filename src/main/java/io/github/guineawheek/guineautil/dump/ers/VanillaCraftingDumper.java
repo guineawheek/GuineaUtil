@@ -1,4 +1,4 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.ICraftingHandler;
@@ -12,6 +12,11 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class VanillaCraftingDumper implements IRecipeDumper {
+    /*
+     * Dumps vanilla recipes.
+     * Can also dump other handlers that also use TemplateRecipeHandler,
+     * which quite a few mods like IC2, AE2, and Avaritia do.
+     */
 
     @Override
     public String getDumperId() {

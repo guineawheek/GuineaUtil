@@ -1,26 +1,25 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.recipe.ICraftingHandler;
-import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapedRecipeHandler;
+import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import net.minecraft.item.ItemStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.crafting.ShapedArcaneRecipe;
+import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
+public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "tc_shaped";
+        return "tc_shapeless";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
-        return handler instanceof ArcaneShapedRecipeHandler;
+        return handler instanceof ArcaneShapelessRecipeHandler;
     }
 
     @Override
@@ -29,25 +28,21 @@ public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
 
         JSONArray allRecipes = new JSONArray();
         for (Object o : ThaumcraftApi.getCraftingRecipes()) {
-            if (o instanceof ShapedArcaneRecipe) {
-                ShapedArcaneRecipe recipe = (ShapedArcaneRecipe) o;
+            if (o instanceof ShapelessArcaneRecipe) {
+                ShapelessArcaneRecipe recipe = (ShapelessArcaneRecipe) o;
                 JSONObject jsonRecipe = new JSONObject()
                     .put("research", recipe.getResearch())
                     .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput()))
-                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()))
-                    .put("width", recipe.width)
-                    .put("height", recipe.height);
-                if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().length < 1) {
+                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()));
+                if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().size() < 1) {
                     continue;
                 }
                 JSONArray jsonInputs = new JSONArray();
-                for (int i = 0; i < recipe.getInput().length; i++) {
-                    Object ri = recipe.getInput()[i];
-                    JSONObject jsonInput = new JSONObject().put("idx", i);
+                for (Object ri: recipe.getInput()) {
                     if (ri instanceof ItemStack) {
-                        jsonInputs.put(jsonInput.put("stack", new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) ri))));
+                        jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) ri)));
                     } else if (ri instanceof ArrayList) {
-                        jsonInputs.put(jsonInput.put("stack", new JSONArray().put(JSONUtil.encodeItemStackList((ArrayList<ItemStack>) ri))));
+                        jsonInputs.put(JSONUtil.encodeItemStackList((ArrayList<ItemStack>) ri));
                     }
                 }
                 jsonRecipe.put("inputs", jsonInputs);

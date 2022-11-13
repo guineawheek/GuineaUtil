@@ -1,32 +1,34 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.recipe.ICraftingHandler;
+import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
-import gregtech.nei.GT_NEI_AssLineHandler;
+import gregtech.nei.GT_NEI_DefaultHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GregTechAsslineDumper implements IRecipeDumper {
+public class GregTechDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "gt_assline";
+        return "gt";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
-        return handler instanceof GT_NEI_AssLineHandler;
+        return handler instanceof GT_NEI_DefaultHandler;
     }
 
     @Override
     public JSONObject dump(ICraftingHandler handler) {
-        GT_NEI_AssLineHandler gtHandler = (GT_NEI_AssLineHandler) handler;
+        GT_NEI_DefaultHandler gtHandler = (GT_NEI_DefaultHandler) handler;
 
         JSONArray allRecipes = new JSONArray();
-        for (GT_Recipe recipe : gtHandler.getSortedRecipes()) {
+        for (GT_NEI_DefaultHandler.CachedDefaultRecipe cdrecipe : gtHandler.getCache()) {
             JSONObject jsonRecipe = new JSONObject();
+            GT_Recipe recipe = cdrecipe.mRecipe;
             jsonRecipe.put("EU/t", recipe.mEUt); // EU/t
             jsonRecipe.put("duration", recipe.mDuration); // base duration
             jsonRecipe.put("fake", recipe.mFakeRecipe); // whether the recipe is just for NEI display
@@ -54,20 +56,10 @@ public class GregTechAsslineDumper implements IRecipeDumper {
 
             JSONArray jsonInputs = new JSONArray();
             for (int i = 0; i < recipe.mInputs.length; i++) {
-                Object input;
-                if (recipe instanceof GT_Recipe.GT_Recipe_WithAlt) {
-                    input = ((GT_Recipe.GT_Recipe_WithAlt) recipe).getAltRepresentativeInput(i);
-                } else {
-                    input = recipe.mInputs[i];
-                }
+                ItemStack input = recipe.mInputs[i];
                 if (input == null) continue;
-                if (input instanceof ItemStack[]) {
-                    jsonInputs.put(JSONUtil.encodeItemStackArray((ItemStack[]) input));
-                } else if (input instanceof ItemStack){
-                    jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) input)));
-                }
+                jsonInputs.put(new JSONArray(JSONUtil.encodeItemStackList(GT_OreDictUnificator.getNonUnifiedStacks(input))));
             }
-
             jsonRecipe.put("inputs", jsonInputs);
 
             JSONArray jsonOutputs = new JSONArray();
@@ -89,6 +81,13 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 jsonFluidInputs.put(JSONUtil.encodeFluidStack(inputFluid));
             }
             jsonRecipe.put("fluidInputs", jsonFluidInputs);
+
+            JSONArray jsonFluidOutputs = new JSONArray();
+            for (FluidStack outputFluid : recipe.mFluidOutputs) {
+                if (outputFluid == null || outputFluid.getFluid() == null) break;
+                jsonFluidOutputs.put(JSONUtil.encodeFluidStack(outputFluid));
+            }
+            jsonRecipe.put("fluidOutputs", jsonFluidOutputs);
 
             allRecipes.put(jsonRecipe);
         }

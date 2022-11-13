@@ -7,22 +7,22 @@ import net.minecraftforge.common.config.Property;
 public class Config {
 
     private static class Defaults {
-        public static final String greeting = "Hello World";
+        public static final int indentLevel = 0;
     }
 
     private static class Categories {
         public static final String general = "general";
     }
 
-    public static String greeting = Defaults.greeting;
+    public static int indentLevel = Defaults.indentLevel;
 
     public static void syncronizeConfiguration(File configFile) {
         Configuration configuration = new Configuration(configFile);
         configuration.load();
 
-        Property greetingProperty =
-                configuration.get(Categories.general, "greeting", Defaults.greeting, "How shall I greet?");
-        greeting = greetingProperty.getString();
+        Property indentProperty =
+                configuration.get(Categories.general, "indent", Defaults.indentLevel, "JSON export indent level -- 0 removes all formatting");
+        indentLevel = indentProperty.getInt();
 
         if (configuration.hasChanged()) {
             configuration.save();

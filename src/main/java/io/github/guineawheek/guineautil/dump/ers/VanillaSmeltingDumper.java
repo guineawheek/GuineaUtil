@@ -1,4 +1,4 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.recipe.ICraftingHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;

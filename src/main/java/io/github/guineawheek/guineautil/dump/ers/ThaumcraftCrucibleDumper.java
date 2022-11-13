@@ -1,7 +1,6 @@
-package io.github.guineawheek.guineautil.dump.handlers;
+package io.github.guineawheek.guineautil.dump.ers;
 
 import codechicken.nei.recipe.ICraftingHandler;
-import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.CrucibleRecipeHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import net.minecraft.item.ItemStack;
@@ -9,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.crafting.CrucibleRecipe;
-import thaumcraft.api.crafting.ShapelessArcaneRecipe;
 
 import java.util.ArrayList;
 

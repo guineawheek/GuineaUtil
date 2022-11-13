@@ -47,6 +47,6 @@ These aren't super useful for crafting calculators but may be useful for other r
 
 # Won'tfix (maybe future?)
 
-* IC2 recipes (disabled in GTNH)
+* IC2 non-crafting recipes (disabled in GTNH)
 * TConstruct handlers (not super useful post-HV, only really use it for glue from rubber, just use slimeballs)
 * AE2 machines (gregified)

@@ -1,10 +1,12 @@
 package io.github.guineawheek.guineautil.dump;
 
+import cpw.mods.fml.common.Loader;
+import io.github.guineawheek.guineautil.Config;
 import net.minecraft.command.ICommandSender;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.ICraftingHandler;
 import io.github.guineawheek.guineautil.GuineaUtil;
-import io.github.guineawheek.guineautil.dump.handlers.*;
+import io.github.guineawheek.guineautil.dump.ers.*;
 import net.minecraft.util.ChatComponentText;
 import org.json.JSONObject;
 
@@ -17,20 +19,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDump {
-    List<IRecipeDumper> dumpers;
+    public List<IRecipeDumper> dumpers;
     public RecipeDump() {
         dumpers = new ArrayList<>();
+        GuineaUtil.info("load vanilla dumpers");
         dumpers.add(new VanillaCraftingDumper());
         dumpers.add(new VanillaSmeltingDumper());
         dumpers.add(new VanillaBrewingDumper());
-        dumpers.add(new GregTechDumper());
-        dumpers.add(new GregTechAsslineDumper());
-        dumpers.add(new GTPPSpargingDumper());
-        dumpers.add(new GTPPDecayableDumper());
-        dumpers.add(new ThaumcraftShapedWorktableDumper());
-        dumpers.add(new ThaumcraftShapelessWorktableDumper());
-        dumpers.add(new ThaumcraftCrucibleDumper());
-        dumpers.add(new ThaumcraftInfusionDumper());
+        if (Loader.isModLoaded("gregtech")) {
+            GuineaUtil.info("load gregtech dumpers");
+            dumpers.add(new GregTechDumper());
+            dumpers.add(new GregTechAsslineDumper());
+        }
+        if (Loader.isModLoaded("miscutils")) {
+            GuineaUtil.info("load gt++ dumpers");
+            dumpers.add(new GTPPSpargingDumper());
+            dumpers.add(new GTPPDecayableDumper());
+        }
+        if (Loader.isModLoaded("thaumcraftneiplugin")) {
+            GuineaUtil.info("load tc4 dumpers");
+            dumpers.add(new ThaumcraftShapedWorktableDumper());
+            dumpers.add(new ThaumcraftShapelessWorktableDumper());
+            dumpers.add(new ThaumcraftCrucibleDumper());
+            dumpers.add(new ThaumcraftInfusionDumper());
+        } else if (Loader.isModLoaded("Thaumcraft")) {
+            // strictly speaking this isn't true but that would require some rework
+            GuineaUtil.info("in order for the tc4 dumpers to load, the thaumcraft nei plugin must be installed!");
+        }
+        if (Loader.isModLoaded("Avaritia")) {
+            GuineaUtil.info("load avaritia dumpers");
+            dumpers.add(new AvaritiaXtremeCraftingDumper());
+            dumpers.add(new AvaritiaCompressorDumper());
+        }
+        if (Loader.isModLoaded("IC2")) {
+            GuineaUtil.info("load ic2 dumpers");
+            dumpers.add(new IC2CraftingDumper());
+        }
+        if (Loader.isModLoaded("appliedenergistics2")) {
+            GuineaUtil.info("load ae2 dumpers");
+            dumpers.add(new AE2CraftingDumper());
+        }
 
     }
     public void dump(ICommandSender ics) {
@@ -61,7 +89,7 @@ public class RecipeDump {
                     try {
                         Files.createDirectories(Paths.get("./gutil"));
                         Writer file = new FileWriter("./gutil/" + (handler.getClass().getSimpleName() + "_" + handler.getRecipeName()).replaceAll("[^a-zA-Z0-9]", "_") + ".json");
-                        data.write(file, 2, 0);
+                        data.write(file, Config.indentLevel, 0);
                         file.flush();
                         file.close();
                     } catch (IOException e) {

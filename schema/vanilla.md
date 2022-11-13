@@ -3,7 +3,9 @@
 when `<ItemStack>` is referenced in the schemas, it is formatted as detailed in [item_stacks.md](item_stacks.md)
 
 ## Crafting table recipes
-applies to both shaped and shapeless crafting
+applies to both shaped and shapeless crafting.
+
+also applies to a variety of other crafting too, like avaritia xtreme crafting.
 ```json5
 {
   "recipes": [ // list of all recipes
