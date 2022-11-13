@@ -7,13 +7,16 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JSONUtil {
     /*
-     * Helper class for nbt stuff
+     * Helper class for item stack and nbt stuff
      *
      * thank you opencomputers for a sane example
      * special unthank you to 2014-era mcp for incompleteness
@@ -102,6 +105,17 @@ public class JSONUtil {
         NBTTagList copy = (NBTTagList) tagList.copy();
         for (int i = 0; i < tagList.tagCount(); i++)
             out.put(copy.removeTag(0));
+        return out;
+    }
+
+    public static JSONArray encodeAspectList(AspectList aspectList) {
+        JSONArray out = new JSONArray();
+        for (Aspect aspect : aspectList.aspects.keySet()) {
+            out.put(new JSONObject()
+                .put("aspect", aspect.getTag())
+                .put("amount", aspectList.getAmount(aspect))
+            );
+        }
         return out;
     }
 }

@@ -15,7 +15,7 @@ public class VanillaCraftingDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "shaped_crafting";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {

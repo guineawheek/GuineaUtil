@@ -11,7 +11,7 @@ public class GTPPDecayableDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "gtpp_decay";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {

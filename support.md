@@ -1,16 +1,18 @@
 # Supported mods:
 
-* Vanilla crafting, smelting, brewing
-* Gregtech 5 recipes that use the `GT_NEI_DefaultHandler` class
-
-# TODO:
-* Gregtech
- - Assline
+* Vanilla shaped and shapeless crafting, smelting, brewing
+ - oredicted options for crafting
+* Gregtech 5 
+ - Normmal machines
+ - assline 
+ - all addon machines that use or subclass `GT_NEI_DefaultHandler`
+ - oredicted options for inputs
 
 * GTpp
- - Decayable Recipe Handler
+ - Decayable Recipes
  - LFTR Gas Sparging
 
+# TODO:
 
 * Forestry
  - Bee outputs
@@ -46,5 +48,5 @@ These aren't super useful for crafting calculators but may be useful for other r
 # Won'tfix (maybe future?)
 
 * IC2 recipes (disabled in GTNH)
-* TConstruct handlers (not super useful post-HV, only really use it for glue)
+* TConstruct handlers (not super useful post-HV, only really use it for glue from rubber, just use slimeballs)
 * AE2 machines (gregified)

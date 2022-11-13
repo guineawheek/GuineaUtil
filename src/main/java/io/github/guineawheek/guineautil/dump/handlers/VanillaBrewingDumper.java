@@ -15,7 +15,7 @@ public class VanillaBrewingDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "brewing";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
@@ -32,9 +32,9 @@ public class VanillaBrewingDumper implements IRecipeDumper {
         for (TemplateRecipeHandler.CachedRecipe crecipe : brh.arecipes) {
             BrewingRecipeHandler.CachedBrewingRecipe recipe = (BrewingRecipeHandler.CachedBrewingRecipe) crecipe;
             allRecipes.put(new JSONObject()
-                .put("input", recipe.recipe.ingredient.items[0])
-                .put("precursor", recipe.recipe.precursorPotion.items[0])
-                .put("output", recipe.recipe.result.items[0])
+                .put("input", JSONUtil.encodeItemStack(recipe.recipe.ingredient.items[0]))
+                .put("precursor", JSONUtil.encodeItemStack(recipe.recipe.precursorPotion.items[0]))
+                .put("output", JSONUtil.encodeItemStack(recipe.recipe.result.items[0]))
             );
         }
 

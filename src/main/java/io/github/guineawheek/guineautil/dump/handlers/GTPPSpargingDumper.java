@@ -12,7 +12,7 @@ public class GTPPSpargingDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "gtpp_sparge";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {

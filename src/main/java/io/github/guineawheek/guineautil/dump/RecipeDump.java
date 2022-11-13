@@ -27,6 +27,10 @@ public class RecipeDump {
         dumpers.add(new GregTechAsslineDumper());
         dumpers.add(new GTPPSpargingDumper());
         dumpers.add(new GTPPDecayableDumper());
+        dumpers.add(new ThaumcraftShapedWorktableDumper());
+        dumpers.add(new ThaumcraftShapelessWorktableDumper());
+        dumpers.add(new ThaumcraftCrucibleDumper());
+        dumpers.add(new ThaumcraftInfusionDumper());
 
     }
     public void dump(ICommandSender ics) {

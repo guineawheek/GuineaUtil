@@ -18,7 +18,7 @@ public class GregTechDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "gt";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {

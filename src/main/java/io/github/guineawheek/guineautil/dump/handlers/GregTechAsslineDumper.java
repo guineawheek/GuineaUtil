@@ -13,7 +13,7 @@ public class GregTechAsslineDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "gt_assline";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
@@ -63,9 +63,8 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 if (input == null) continue;
                 if (input instanceof ItemStack[]) {
                     jsonInputs.put(JSONUtil.encodeItemStackArray((ItemStack[]) input));
-                } else {
-                    ItemStack[] itemArr = {(ItemStack) input};
-                    jsonInputs.put(JSONUtil.encodeItemStackArray(itemArr));
+                } else if (input instanceof ItemStack){
+                    jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) input)));
                 }
             }
 
@@ -90,13 +89,6 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 jsonFluidInputs.put(JSONUtil.encodeFluidStack(inputFluid));
             }
             jsonRecipe.put("fluidInputs", jsonFluidInputs);
-
-            JSONArray jsonFluidOutputs = new JSONArray();
-            for (FluidStack outputFluid : recipe.mFluidInputs) {
-                if (outputFluid == null || outputFluid.getFluid() == null) break;
-                jsonFluidOutputs.put(JSONUtil.encodeFluidStack(outputFluid));
-            }
-            jsonRecipe.put("fluidOutputs", jsonFluidOutputs);
 
             allRecipes.put(jsonRecipe);
         }

@@ -13,33 +13,24 @@ import java.util.Arrays;
 public class GUtilCommand extends CommandBase {
     @Override
     public String getCommandName() {
-        return "gutil";
+        return "gutil_dump";
     }
 
     @Override
     public String getCommandUsage(ICommandSender ics) {
-        return "/gutil whatever [see docs]";
+        return "/gutil_dump whatever [see docs]";
     }
 
     @Override
     public void processCommand(ICommandSender ics, String[] args) throws CommandException {
         //ics.addChatMessage(new ChatComponentText("acknowledged"));
 
-        GuineaUtil.recipeDump.dump(ics);
 
-        if (true) return;
-
-        if (args.length == 0) {
-            ics.addChatMessage(new ChatComponentText("add arguments lol"));
+        if (args.length == 0 || !args[0].equals("dump")) {
+            ics.addChatMessage(new ChatComponentText("usage: /gutil dump"));
             return;
         }
-
-        ArrayList<String> opt = new ArrayList<>(Arrays.asList(args));
-        ics.addChatMessage(new ChatComponentText("acknowledged"));
-
-
-
-
-        GuineaUtil.info(String.join(", ", args));
+        ics.addChatMessage(new ChatComponentText("starting full recipe dump"));
+        GuineaUtil.recipeDump.dump(ics);
     }
 }

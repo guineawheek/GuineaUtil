@@ -13,7 +13,7 @@ public class VanillaSmeltingDumper implements IRecipeDumper {
 
     @Override
     public String getDumperId() {
-        return "shapedCrafting";
+        return "smelting";
     }
     @Override
     public boolean claim(ICraftingHandler handler) {
