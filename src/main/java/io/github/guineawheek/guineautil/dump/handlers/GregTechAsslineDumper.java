@@ -64,7 +64,8 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 if (input instanceof ItemStack[]) {
                     jsonInputs.put(JSONUtil.encodeItemStackArray((ItemStack[]) input));
                 } else {
-                    jsonInputs.put(JSONUtil.encodeItemStack((ItemStack) input));
+                    ItemStack[] itemArr = {(ItemStack) input};
+                    jsonInputs.put(JSONUtil.encodeItemStackArray(itemArr));
                 }
             }
 
