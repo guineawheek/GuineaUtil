@@ -29,3 +29,13 @@
   "amount": 1000 // amount, in millibuckets
 }
 ```
+
+# Aspects
+
+```json
+{ <Aspect> } =
+{
+  "aspect": "aer", // aspect key, it's usually a human readable name
+  "amount": 20 // amount of aspect
+}
+```

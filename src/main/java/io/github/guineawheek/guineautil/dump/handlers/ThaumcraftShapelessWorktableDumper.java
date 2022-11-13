@@ -34,8 +34,8 @@ public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
                 ShapelessArcaneRecipe recipe = (ShapelessArcaneRecipe) o;
                 JSONObject jsonRecipe = new JSONObject()
                     .put("research", recipe.getResearch())
-                    .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput())
-                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects())));
+                    .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput()))
+                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()));
                 if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().size() < 1) {
                     continue;
                 }

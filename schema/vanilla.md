@@ -4,7 +4,7 @@ when `<ItemStack>` is referenced in the schemas, it is formatted as detailed in 
 
 ## Crafting table recipes
 applies to both shaped and shapeless crafting
-```json
+```json5
 {
   "recipes": [ // list of all recipes
     {
@@ -17,6 +17,13 @@ applies to both shaped and shapeless crafting
           ],
           "rely": 0, // relative y coordinate in nei display
           "relx": 0, // relative x coordinate in nei display
+        },
+        { // the next item
+          "stack": [
+            { <ItemStack> },
+          ],
+          "rely": 42,
+          "relx": 69,
         }
       ]
     }
@@ -28,7 +35,7 @@ applies to both shaped and shapeless crafting
 
 ## Smelting recipes
 
-```json
+```json5
 {
   "recipes": [ // list of all recipes
     {
@@ -43,7 +50,7 @@ applies to both shaped and shapeless crafting
 
 ## Brewing recipes
 
-```json
+```json5
 {
   "recipes": [ // list of all recipes
     {

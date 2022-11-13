@@ -1,13 +1,13 @@
-# Vanilla recipes
+# Gregtech recipes
 
 when `<ItemStack>`, `<FluidStack>`, or `<Aspect>` is referenced in the schemas, it is formatted as detailed in [item_stacks.md](item_stacks.md)
 
 
-## Gregtech recipes
+## 99% of the recipes
 
 (applies to both assline and non-assline)
 
-```json
+```json5
 {
   "recipes": [ // list of all recipes
     {
@@ -83,7 +83,7 @@ may need to read their sourcecode to figure out how it applies to the bacvat or 
 
 These are recipes for the lead-lined box.
 
-```json
+```json5
 {
   "recipes": [
     {
@@ -100,7 +100,7 @@ These are recipes for the lead-lined box.
 ## GT++ Sparging Tower
 pretty similar to the normal recipe handler, just without items
 
-```json
+```json5
 {
   "recipes": [
     {

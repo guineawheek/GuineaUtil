@@ -10,6 +10,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
 
@@ -32,17 +33,21 @@ public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
                 ShapedArcaneRecipe recipe = (ShapedArcaneRecipe) o;
                 JSONObject jsonRecipe = new JSONObject()
                     .put("research", recipe.getResearch())
-                    .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput())
-                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects())));
+                    .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput()))
+                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()))
+                    .put("width", recipe.width)
+                    .put("height", recipe.height);
                 if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().length < 1) {
                     continue;
                 }
                 JSONArray jsonInputs = new JSONArray();
-                for (Object ri: recipe.getInput()) {
+                for (int i = 0; i < recipe.getInput().length; i++) {
+                    Object ri = recipe.getInput()[i];
+                    JSONObject jsonInput = new JSONObject().put("idx", i);
                     if (ri instanceof ItemStack) {
-                        jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) ri)));
+                        jsonInputs.put(jsonInput.put("stack", new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) ri))));
                     } else if (ri instanceof ArrayList) {
-                        jsonInputs.put(JSONUtil.encodeItemStackList((ArrayList<ItemStack>) ri));
+                        jsonInputs.put(jsonInput.put("stack", new JSONArray().put(JSONUtil.encodeItemStackList((ArrayList<ItemStack>) ri))));
                     }
                 }
                 jsonRecipe.put("inputs", jsonInputs);

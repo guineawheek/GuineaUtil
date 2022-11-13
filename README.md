@@ -7,6 +7,8 @@ random utility mod mostly for gtnh
 you can dump recipes with `/gutil dump` and it will freeze your game and then make json recipes
 for supported NEI handlers in `.minecraft/gutil`
 
+(for this reason, this mod is best used on singleplayer installs and disabled after use)
+
 this mod aims for completeness in its dumps as well as utility
 
 ## features
@@ -25,9 +27,9 @@ this mod aims for completeness in its dumps as well as utility
 | gt++                   | yes, including lead-lined box and sparging tower                                     |
 | thaumcraft 4 worktable | yes, shaped, shapeless, oredict                                                      |
 | thaumcraft 4 crucible  | yes                                                                                  |
-| thaumcraft 4 worktable | yes                                                                                  |
+| thaumcraft 4 infusion  | yes                                                                                  |
 | forestry               | TODO                                                                                 |
 | enderio                | TODO                                                                                 |
+| avaritia               | TODO                                                                                 |
 
-for specifics on the dumps, see the `schema` folder of the repository to see how the json files
-are formatted.
+for specifics on the dumps, see the `schema` folder of the repository to see how the json files are formatted.
