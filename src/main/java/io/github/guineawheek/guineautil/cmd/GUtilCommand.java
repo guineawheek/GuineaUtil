@@ -13,12 +13,12 @@ import java.util.Arrays;
 public class GUtilCommand extends CommandBase {
     @Override
     public String getCommandName() {
-        return "gutil_dump";
+        return "gutil";
     }
 
     @Override
     public String getCommandUsage(ICommandSender ics) {
-        return "/gutil_dump whatever [see docs]";
+        return "/gutil whatever [see docs]";
     }
 
     @Override

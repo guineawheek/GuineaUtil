@@ -1,6 +1,6 @@
 # GuineaUtil
 
-random utility mod mostly for gtnh
+random utility mod mostly for gtnh (1.7.10)
 
 ## description
 
@@ -33,3 +33,9 @@ this mod aims for completeness in its dumps as well as utility
 | avaritia               | TODO                                                                                 |
 
 for specifics on the dumps, see the `schema` folder of the repository to see how the json files are formatted.
+
+## user support
+
+please report bugs/suggestions to the issue tracker or gtnh discord
+
+"will there be a port to 1.x?" 1.7.10 is the latest version of minecraft
