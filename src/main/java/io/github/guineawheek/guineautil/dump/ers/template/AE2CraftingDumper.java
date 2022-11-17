@@ -1,8 +1,9 @@
-package io.github.guineawheek.guineautil.dump.ers;
+package io.github.guineawheek.guineautil.dump.ers.template;
 
 import appeng.integration.modules.NEIHelpers.NEIAEShapedRecipeHandler;
 import appeng.integration.modules.NEIHelpers.NEIAEShapelessRecipeHandler;
 import codechicken.nei.recipe.ICraftingHandler;
+import io.github.guineawheek.guineautil.dump.ers.TemplateRecipeHandlerDumper;
 
 public class AE2CraftingDumper extends TemplateRecipeHandlerDumper {
     @Override

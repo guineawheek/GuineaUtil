@@ -32,5 +32,6 @@ public class GUtilCommand extends CommandBase {
         }
         ics.addChatMessage(new ChatComponentText("starting full recipe dump"));
         GuineaUtil.recipeDump.dump(ics);
+        ics.addChatMessage(new ChatComponentText("finished full recipe dump"));
     }
 }

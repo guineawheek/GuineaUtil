@@ -1,5 +1,6 @@
 package io.github.guineawheek.guineautil.dump;
 
+import io.github.guineawheek.guineautil.GuineaUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
@@ -13,6 +14,8 @@ import thaumcraft.api.aspects.AspectList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 public class JSONUtil {
     /*
@@ -28,15 +31,26 @@ public class JSONUtil {
      * @return JSONObject
      */
     public static JSONObject encodeItemStack(ItemStack stack) {
-        return new JSONObject()
-            .put("name", Item.itemRegistry.getNameForObject(stack.getItem()))
-            .put("label", stack.getDisplayName())
+        String name = Item.itemRegistry.getNameForObject(stack.getItem());
+        JSONObject jsonObject =  new JSONObject()
+            .put("name", name)
             .put("damage", stack.getItemDamage())
-            .put("maxDamage", stack.getItemDamage())
+            .put("maxDamage", stack.getMaxDamage())
             .put("size", stack.stackSize)
             .put("maxSize", stack.getMaxStackSize())
             .put("oreNames", getOreNames(stack))
             .put("tag", (stack.hasTagCompound()) ? encodeTagCompound(stack.getTagCompound()) : null);
+
+        try {
+            jsonObject.put("label", stack.getDisplayName());
+        } catch (Exception e) {
+            // thanks forestry. fuck you.
+            GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump display name for item " + name);
+            GuineaUtil.error(getStackTrace(e));
+            jsonObject.put("label", name);
+        }
+
+        return jsonObject;
     }
 
     private static List<String> getOreNames(ItemStack stack) {
@@ -66,6 +80,23 @@ public class JSONUtil {
             .put("name", stack.getFluid().getName())
             .put("label", stack.getFluid().getLocalizedName(null))
             .put("amount", stack.amount);
+    }
+
+    public static Object encodeNullable(Object obj) {
+        if (obj == null) {
+            return JSONObject.NULL;
+        } else if (obj instanceof ItemStack) {
+            return encodeItemStack((ItemStack) obj);
+        } else if (obj instanceof ItemStack[]) {
+            return encodeItemStackArray((ItemStack[]) obj);
+        } else if (obj instanceof List) {
+            List oList = (List) obj;
+            if (oList.isEmpty() || !(oList.get(0) instanceof ItemStack)) return new JSONArray();
+            return encodeItemStackList(oList);
+        } else if (obj instanceof FluidStack) {
+            return encodeFluidStack((FluidStack) obj);
+        }
+        return obj.toString();
     }
 
     /**
@@ -115,6 +146,25 @@ public class JSONUtil {
                 .put("aspect", aspect.getTag())
                 .put("amount", aspectList.getAmount(aspect))
             );
+        }
+        return out;
+    }
+
+    public static JSONArray encodeShapedCraftingList(Object[] inputStacks) {
+        JSONArray out = new JSONArray();
+        for (int i = 0; i < inputStacks.length; i++) {
+            JSONObject stack = new JSONObject().put("idx", i);
+            Object obj = inputStacks[i];
+            if (obj instanceof ItemStack) {
+                stack.put("stack", new JSONArray().put(encodeItemStack((ItemStack) obj)));
+            } else if (obj instanceof ItemStack[]) {
+                stack.put("stack", encodeItemStackArray((ItemStack[]) obj));
+            } else if (obj instanceof List) {
+                stack.put("stack", encodeItemStackList((List<ItemStack>) obj));
+            } else {
+                continue;
+            }
+            out.put(stack);
         }
         return out;
     }

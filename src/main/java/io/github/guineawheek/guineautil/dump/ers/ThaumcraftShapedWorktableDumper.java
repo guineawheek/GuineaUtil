@@ -39,6 +39,7 @@ public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
                 if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().length < 1) {
                     continue;
                 }
+                /*
                 JSONArray jsonInputs = new JSONArray();
                 for (int i = 0; i < recipe.getInput().length; i++) {
                     Object ri = recipe.getInput()[i];
@@ -48,8 +49,9 @@ public class ThaumcraftShapedWorktableDumper implements IRecipeDumper {
                     } else if (ri instanceof ArrayList) {
                         jsonInputs.put(jsonInput.put("stack", new JSONArray().put(JSONUtil.encodeItemStackList((ArrayList<ItemStack>) ri))));
                     }
-                }
-                jsonRecipe.put("inputs", jsonInputs);
+                }*/
+
+                jsonRecipe.put("inputs", JSONUtil.encodeShapedCraftingList(recipe.getInput()));
                 allRecipes.put(jsonRecipe);
             }
         }

@@ -2,10 +2,11 @@
 
 when `<ItemStack>` is referenced in the schemas, it is formatted as detailed in [item_stacks.md](item_stacks.md)
 
-## Crafting table recipes
-applies to both shaped and shapeless crafting.
+## Crafting table recipes/TemplateRecipeHandler
+Applies to both shaped and shapeless crafting.
 
-also applies to a variety of other crafting too, like avaritia xtreme crafting.
+If you enable the generic TemplateRecipeHandler dumper in the config, they will also use this format.
+
 ```json5
 {
   "recipes": [ // list of all recipes
@@ -27,6 +28,12 @@ also applies to a variety of other crafting too, like avaritia xtreme crafting.
           "rely": 42,
           "relx": 69,
         }
+        // ...
+      ],
+      "outputs": [ // array of output stacks
+        { <ItemStack> },
+        { <ItemStack> },
+        // ...
       ]
     }
   ],

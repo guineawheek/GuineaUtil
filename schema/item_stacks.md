@@ -1,5 +1,5 @@
 # Item stacks
-```json
+```json5
 { <ItemStack> } =
 
 {
@@ -21,7 +21,7 @@
 
 # Fluid stacks
 
-```json
+```json5
 { <FluidStack> } =
 {
   "name": "fluorine", // fluid name
@@ -32,7 +32,7 @@
 
 # Aspects
 
-```json
+```json5
 { <Aspect> } =
 {
   "aspect": "aer", // aspect key, it's usually a human readable name

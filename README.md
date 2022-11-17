@@ -18,23 +18,24 @@ this mod aims for completeness in its dumps as well as utility
 
 ## recipe mod support
 
-| recipe type            | support                                                                             |
-|------------------------|-------------------------------------------------------------------------------------|
-| vanilla crafting       | yes: shaped, shapeless, oredict                                                     |
-| vanilla smelting       | yes                                                                                 |
-| vanilla brewing        | yes                                                                                 |
-| gregtech 5u            | yes: with oredict, includes assline and addons that subclass `GT_NEI_DefaultHandler` |
-| gt++                   | yes: including lead-lined box and sparging tower                                    |
-| thaumcraft 4 worktable | yes: shaped, shapeless, oredict                                                     |
-| thaumcraft 4 crucible  | yes                                                                                 |
-| thaumcraft 4 infusion  | yes                                                                                 |
-| avaritia               | yes: crafting and neutronium compressor                                             |
-| ic2                    | just the crafting table recipes                                                     |
-| ae2                    | just the crafting table recipes                                                     |
-| forestry machines      | TODO                                                                                |
-| forestry bee breeding  | TODO                                                                                |
-| forestry bee products  | TODO                                                                                |
-| enderio                | TODO: planned just the slice n splice though                                        |
+| recipe type                     | support                                                                              |
+|---------------------------------|--------------------------------------------------------------------------------------|
+| vanilla crafting                | yes: shaped, shapeless, oredict                                                      |
+| vanilla smelting                | yes                                                                                  |
+| vanilla brewing                 | yes                                                                                  |
+| gregtech 5u                     | yes: with oredict, includes assline and addons that subclass `GT_NEI_DefaultHandler` |
+| gt++                            | yes: including lead-lined box and sparging tower                                     |
+| thaumcraft 4 worktable          | yes: shaped, shapeless, oredict                                                      |
+| thaumcraft 4 crucible           | yes                                                                                  |
+| thaumcraft 4 infusion           | yes                                                                                  |
+| avaritia                        | yes: crafting and neutronium compressor                                              |
+| ic2                             | just the crafting table recipes                                                      |
+| ae2                             | just the crafting table recipes                                                      |
+| forestry machines               | TODO                                                                                 |
+| forestry bee breeding           | TODO                                                                                 |
+| forestry bee products           | TODO                                                                                 |
+| enderio                         | TODO: planned just the slice n splice though                                         |
+| generic `TemplateRecipeHandler` | if explicitly enabled -- will be worse than dedicated handlers                       |
 
 for specifics on the dumps, see the `schema` folder of the repository to see how the json files are formatted.
 

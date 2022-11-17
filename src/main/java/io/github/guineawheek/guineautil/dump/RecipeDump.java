@@ -3,6 +3,8 @@ package io.github.guineawheek.guineautil.dump;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.common.Loader;
 import io.github.guineawheek.guineautil.Config;
+import io.github.guineawheek.guineautil.dump.ers.forestry.*;
+import io.github.guineawheek.guineautil.dump.ers.template.*;
 import net.minecraft.command.ICommandSender;
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.ICraftingHandler;
@@ -60,6 +62,16 @@ public class RecipeDump {
             GuineaUtil.info("load ae2 dumpers");
             dumpers.add(new AE2CraftingDumper());
         }
+        if (Loader.isModLoaded("Forestry")) {
+            GuineaUtil.info("load forestry dumpers");
+            dumpers.add(new CarpenterDumper());
+            dumpers.add(new CentrifugeDumper());
+            dumpers.add(new FabricatorDumper());
+            dumpers.add(new FermenterDumper());
+            dumpers.add(new MoistenerDumper());
+            dumpers.add(new SqueezerDumper());
+            dumpers.add(new StillDumper());
+        }
 
         if (Config.dumpAllTemplates) {
             GuineaUtil.info("load fallback template dumper");
@@ -69,7 +81,6 @@ public class RecipeDump {
                     return handler instanceof TemplateRecipeHandler;
                 }
             });
-
         }
 
 
@@ -106,6 +117,7 @@ public class RecipeDump {
             if (!dumped) GuineaUtil.info("Unclaimed: " + handler.getHandlerId() + " " + handler.getRecipeName());
         }
 
+        GuineaUtil.info("All recipehandlers dumped.");
 
     }
 }

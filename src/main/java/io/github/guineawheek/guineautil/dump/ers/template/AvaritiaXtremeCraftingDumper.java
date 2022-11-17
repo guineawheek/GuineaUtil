@@ -1,8 +1,9 @@
-package io.github.guineawheek.guineautil.dump.ers;
+package io.github.guineawheek.guineautil.dump.ers.template;
 
 import codechicken.nei.recipe.ICraftingHandler;
 import fox.spiteful.avaritia.compat.nei.ExtremeShapedRecipeHandler;
 import fox.spiteful.avaritia.compat.nei.ExtremeShapelessRecipeHandler;
+import io.github.guineawheek.guineautil.dump.ers.TemplateRecipeHandlerDumper;
 
 public class AvaritiaXtremeCraftingDumper extends TemplateRecipeHandlerDumper {
     @Override
