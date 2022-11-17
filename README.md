@@ -28,16 +28,19 @@ this mod aims for completeness in its dumps as well as utility
 | thaumcraft 4 worktable          | yes: shaped, shapeless, oredict                                                      |
 | thaumcraft 4 crucible           | yes                                                                                  |
 | thaumcraft 4 infusion           | yes                                                                                  |
+| thaumcraft 4 item aspects       | TODO                                                                                 |
 | avaritia                        | yes: crafting and neutronium compressor                                              |
 | ic2                             | just the crafting table recipes                                                      |
 | ae2                             | just the crafting table recipes                                                      |
-| forestry machines               | TODO                                                                                 |
+| forestry machines               | carpenter, centrifuge, therm.fab, fermenter, moistener, squeezer, still              |
 | forestry bee breeding           | TODO                                                                                 |
 | forestry bee products           | TODO                                                                                 |
-| enderio                         | TODO: planned just the slice n splice though                                         |
-| generic `TemplateRecipeHandler` | if explicitly enabled -- will be worse than dedicated handlers                       |
+| enderio                         | no                                                                                   |
+| blood magic                     | no                                                                                   |
+| generic `TemplateRecipeHandler` | if explicitly enabled in config file -- will be worse than dedicated handlers        |
 
 for specifics on the dumps, see the `schema` folder of the repository to see how the json files are formatted.
+
 
 ## user support
 
