@@ -25,6 +25,13 @@ import org.json.JSONObject;
 public class RecipeDump {
     public List<IRecipeDumper> dumpers;
 
+    private static class TemplateRecipeHandlerFallbackDumper extends TemplateRecipeHandlerDumper {
+        @Override
+        public boolean claim(ICraftingHandler handler) {
+            return handler instanceof TemplateRecipeHandler;
+        }
+    }
+
     public RecipeDump() {
         dumpers = new ArrayList<>();
         GuineaUtil.info("load vanilla dumpers");
@@ -77,12 +84,7 @@ public class RecipeDump {
 
         if (Config.dumpAllTemplates) {
             GuineaUtil.info("load fallback template dumper");
-            dumpers.add(new TemplateRecipeHandlerDumper() {
-                @Override
-                public boolean claim(ICraftingHandler handler) {
-                    return handler instanceof TemplateRecipeHandler;
-                }
-            });
+            dumpers.add(new TemplateRecipeHandlerFallbackDumper());
         }
     }
 
@@ -109,6 +111,7 @@ public class RecipeDump {
                     JSONObject data;
                     try {
                         data = dumper.dump(handler);
+                        data.put("dumperName", dumper.getClass().getSimpleName());
                         dumped = true;
                     } catch (Exception e) {
                         GuineaUtil.error(" === Error trying to dump recipes for " + handler.getHandlerId() + " ("
