@@ -32,7 +32,8 @@ public abstract class TemplateRecipeHandlerDumper implements IRecipeDumper {
 
         for (TemplateRecipeHandler.CachedRecipe recipe : h.arecipes) {
             JSONObject out = new JSONObject();
-            out.put("outputs", JSONUtil.encodeItemStackArray(recipe.getResult().items));
+            PositionedStack result = recipe.getResult();
+            out.put("outputs", (result != null) ? JSONUtil.encodeItemStackArray(result.items) : JSONObject.NULL);
 
             JSONArray ingArray = new JSONArray();
             List<PositionedStack> stacks = recipe.getIngredients();

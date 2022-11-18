@@ -50,6 +50,8 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 // this is used in fake recipes for some sort of catalyst...?
                 // it's mentioned as used in Printer
                 jsonRecipe.put("specialItem", JSONUtil.encodeItemStack((ItemStack) recipe.mSpecialItems));
+            } else {
+                jsonRecipe.put("specialItem", JSONObject.NULL);
             }
 
             JSONArray jsonInputs = new JSONArray();

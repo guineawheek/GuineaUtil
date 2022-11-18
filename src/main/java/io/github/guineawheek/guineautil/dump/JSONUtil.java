@@ -30,25 +30,63 @@ public class JSONUtil {
      */
     public static JSONObject encodeItemStack(ItemStack stack) {
         String name = Item.itemRegistry.getNameForObject(stack.getItem());
-        JSONObject jsonObject = new JSONObject()
+
+        // it should be a crime to have your itemstacks NPE on these calls.
+        // and yet...
+        JSONObject jsonObject = new JSONObject();
+        jsonObject
                 .put("name", name)
-                .put("damage", stack.getItemDamage())
-                .put("maxDamage", stack.getMaxDamage())
+                .put("damage", safeItemDamage(stack, name))
+                .put("maxDamage", safeMaxDamage(stack, name))
                 .put("size", stack.stackSize)
-                .put("maxSize", stack.getMaxStackSize())
+                .put("maxSize", safeMaxStackSize(stack, name))
                 .put("oreNames", getOreNames(stack))
-                .put("tag", (stack.hasTagCompound()) ? encodeTagCompound(stack.getTagCompound()) : null);
-
-        try {
-            jsonObject.put("label", stack.getDisplayName());
-        } catch (Exception e) {
-            // thanks forestry. fuck you.
-            GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump display name for item " + name);
-            GuineaUtil.error(getStackTrace(e));
-            jsonObject.put("label", name);
-        }
-
+                .put("tag", (stack.hasTagCompound()) ? encodeTagCompound(stack.getTagCompound()) : JSONObject.NULL)
+                .put("label", safeDisplayName(stack, name));
         return jsonObject;
+    }
+
+    private static int safeItemDamage(ItemStack stack, String name) {
+        try {
+            return stack.getItemDamage();
+        } catch (Exception e) {
+            GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump item damage for item " + name);
+            GuineaUtil.error(getStackTrace(e));
+            return -1;
+        }
+    }
+
+    private static int safeMaxDamage(ItemStack stack, String name) {
+        try {
+            return stack.getMaxDamage();
+        } catch (Exception e) {
+            GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump item max damage for item " + name);
+            GuineaUtil.error(getStackTrace(e));
+            return -1;
+        }
+    }
+
+    private static int safeMaxStackSize(ItemStack stack, String name) {
+        try {
+            return stack.getMaxStackSize();
+        } catch (Exception e) {
+            GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump item max stack size for item " + name);
+            GuineaUtil.error(getStackTrace(e));
+            return -1;
+        }
+    }
+
+    private static String safeDisplayName(ItemStack stack, String name) {
+        try {
+            return stack.getDisplayName();
+        } catch (Exception e) {
+            // we'll just default to returning the name quietly.
+            // quite a few mods will NPE or ArrayIndexOutOfBounds here if the damage/NBT is missing.
+
+            // GuineaUtil.error("=== JANK-ASS MOD ALERT! Could not dump display name for item " + name);
+            // GuineaUtil.error(getStackTrace(e));
+            return name;
+        }
     }
 
     private static List<String> getOreNames(ItemStack stack) {
