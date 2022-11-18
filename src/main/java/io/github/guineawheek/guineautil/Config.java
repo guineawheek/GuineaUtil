@@ -9,6 +9,7 @@ public class Config {
     private static class Defaults {
         public static final int indentLevel = 0;
         public static final boolean dumpAllTemplates = false;
+        public static final String[] handlerBlacklist = {"bq_standard.integration.nei.QuestRecipeHandler"};
     }
 
     private static class Categories {
@@ -17,6 +18,7 @@ public class Config {
 
     public static int indentLevel = Defaults.indentLevel;
     public static boolean dumpAllTemplates = false;
+    public static String[] handlerBlacklist;
 
     public static void syncronizeConfiguration(File configFile) {
         Configuration configuration = new Configuration(configFile);
@@ -36,6 +38,13 @@ public class Config {
                 "Whether to enable dumping NEI handlers subclassing the base TemplateRecipeHandlerDumper if no other dumpers claim it.\n"
                         + "Enable to try to dump handlers that are not explicitly supported, or dump facade and firework recipes for some reason");
         dumpAllTemplates = dumpAllTemplatesProperty.getBoolean();
+
+        Property handlerBlacklistProperty = configuration.get(
+                Categories.general,
+                "handlerBlacklist",
+                Defaults.handlerBlacklist,
+                "List of handler classes to not dump, even if they match a dumper.");
+        handlerBlacklist = handlerBlacklistProperty.getStringList();
 
         if (configuration.hasChanged()) {
             configuration.save();
