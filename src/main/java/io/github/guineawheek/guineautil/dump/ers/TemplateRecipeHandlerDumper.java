@@ -25,7 +25,9 @@ public abstract class TemplateRecipeHandlerDumper implements IRecipeDumper {
     @Override
     public JSONObject dump(ICraftingHandler handler) {
         TemplateRecipeHandler h = (TemplateRecipeHandler) handler;
-        h.loadCraftingRecipes(h.getOverlayIdentifier()); // needed to load recipes
+        String overlayID = h.getOverlayIdentifier();
+        if (overlayID == null) overlayID = "";
+        h.loadCraftingRecipes(overlayID); // needed to load recipes
         JSONArray allRecipes = new JSONArray();
 
         for (TemplateRecipeHandler.CachedRecipe recipe : h.arecipes) {

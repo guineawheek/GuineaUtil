@@ -1,5 +1,7 @@
 package io.github.guineawheek.guineautil.dump;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
+
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.ICraftingHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -96,8 +98,16 @@ public class RecipeDump {
             for (IRecipeDumper dumper : dumpers) {
                 if (dumper.claim(handler)) {
                     GuineaUtil.info("Dumping: " + handler.getHandlerId() + " " + handler.getRecipeName());
-                    JSONObject data = dumper.dump(handler);
-                    dumped = true;
+                    JSONObject data;
+                    try {
+                        data = dumper.dump(handler);
+                        dumped = true;
+                    } catch (Exception e) {
+                        GuineaUtil.error(" === Error trying to dump recipes for " + handler.getHandlerId() + " ("
+                                + handler.getRecipeName() + ")");
+                        GuineaUtil.error(getStackTrace(e));
+                        break;
+                    }
 
                     try {
                         Files.createDirectories(Paths.get("./gutil"));
