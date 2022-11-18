@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 public interface IRecipeDumper {
     boolean claim(ICraftingHandler handler);
+
     JSONObject dump(ICraftingHandler handler);
 
     String getDumperId();

@@ -16,6 +16,7 @@ public class GregTechDumper implements IRecipeDumper {
     public String getDumperId() {
         return "gt";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof GT_NEI_DefaultHandler;
@@ -53,12 +54,12 @@ public class GregTechDumper implements IRecipeDumper {
                 jsonRecipe.put("specialItem", JSONUtil.encodeItemStack((ItemStack) recipe.mSpecialItems));
             }
 
-
             JSONArray jsonInputs = new JSONArray();
             for (int i = 0; i < recipe.mInputs.length; i++) {
                 ItemStack input = recipe.mInputs[i];
                 if (input == null) continue;
-                jsonInputs.put(new JSONArray(JSONUtil.encodeItemStackList(GT_OreDictUnificator.getNonUnifiedStacks(input))));
+                jsonInputs.put(
+                        new JSONArray(JSONUtil.encodeItemStackList(GT_OreDictUnificator.getNonUnifiedStacks(input))));
             }
             jsonRecipe.put("inputs", jsonInputs);
 
@@ -68,10 +69,7 @@ public class GregTechDumper implements IRecipeDumper {
                 if (output == null) continue;
                 // scale is hundredths of a percent.
                 // 10000 is 100% chance
-                jsonOutputs.put(
-                    JSONUtil.encodeItemStack(output)
-                        .put("chance", recipe.getOutputChance(i))
-                );
+                jsonOutputs.put(JSONUtil.encodeItemStack(output).put("chance", recipe.getOutputChance(i)));
             }
             jsonRecipe.put("outputs", jsonOutputs);
 
@@ -92,10 +90,9 @@ public class GregTechDumper implements IRecipeDumper {
             allRecipes.put(jsonRecipe);
         }
 
-
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

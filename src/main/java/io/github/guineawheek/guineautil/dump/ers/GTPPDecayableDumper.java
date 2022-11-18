@@ -13,6 +13,7 @@ public class GTPPDecayableDumper implements IRecipeDumper {
     public String getDumperId() {
         return "gtpp_decay";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof DecayableRecipeHandler;
@@ -27,16 +28,17 @@ public class GTPPDecayableDumper implements IRecipeDumper {
         JSONArray allRecipes = new JSONArray();
         for (TemplateRecipeHandler.CachedRecipe crecipe : gtppHandler.arecipes) {
             DecayableRecipeHandler.DecayableRecipeNEI recipe = (DecayableRecipeHandler.DecayableRecipeNEI) crecipe;
-            allRecipes.put(new JSONObject()
-                .put("input", JSONUtil.encodeItemStack(recipe.getIngredient().item))
-                .put("output", JSONUtil.encodeItemStack(recipe.getResult().item))
-                .put("time", recipe.time) // in ticks
-            );
+            allRecipes.put(
+                    new JSONObject()
+                            .put("input", JSONUtil.encodeItemStack(recipe.getIngredient().item))
+                            .put("output", JSONUtil.encodeItemStack(recipe.getResult().item))
+                            .put("time", recipe.time) // in ticks
+                    );
         }
 
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

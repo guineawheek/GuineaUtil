@@ -1,18 +1,14 @@
 package io.github.guineawheek.guineautil.dump;
 
+import codechicken.nei.recipe.GuiCraftingRecipe;
+import codechicken.nei.recipe.ICraftingHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.common.Loader;
 import io.github.guineawheek.guineautil.Config;
-import io.github.guineawheek.guineautil.dump.ers.forestry.*;
-import io.github.guineawheek.guineautil.dump.ers.template.*;
-import net.minecraft.command.ICommandSender;
-import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.ICraftingHandler;
 import io.github.guineawheek.guineautil.GuineaUtil;
 import io.github.guineawheek.guineautil.dump.ers.*;
-import net.minecraft.util.ChatComponentText;
-import org.json.JSONObject;
-
+import io.github.guineawheek.guineautil.dump.ers.forestry.*;
+import io.github.guineawheek.guineautil.dump.ers.template.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -20,9 +16,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChatComponentText;
+import org.json.JSONObject;
 
 public class RecipeDump {
     public List<IRecipeDumper> dumpers;
+
     public RecipeDump() {
         dumpers = new ArrayList<>();
         GuineaUtil.info("load vanilla dumpers");
@@ -82,16 +82,15 @@ public class RecipeDump {
                 }
             });
         }
-
-
     }
+
     public void dump(ICommandSender ics) {
 
         List<ICraftingHandler> handlers = GuiCraftingRecipe.craftinghandlers;
-        //List<ICraftingHandler> serialHandlers = GuiCraftingRecipe.serialCraftingHandlers;
+        // List<ICraftingHandler> serialHandlers = GuiCraftingRecipe.serialCraftingHandlers;
 
         GuineaUtil.info("NEI crafting handlers: ");
-        for (ICraftingHandler handler : handlers)  {
+        for (ICraftingHandler handler : handlers) {
 
             boolean dumped = false;
             for (IRecipeDumper dumper : dumpers) {
@@ -102,14 +101,18 @@ public class RecipeDump {
 
                     try {
                         Files.createDirectories(Paths.get("./gutil"));
-                        Writer file = new FileWriter("./gutil/" + (handler.getClass().getSimpleName() + "_" + handler.getRecipeName()).replaceAll("[^a-zA-Z0-9]", "_") + ".json");
+                        Writer file = new FileWriter("./gutil/"
+                                + (handler.getClass().getSimpleName() + "_" + handler.getRecipeName())
+                                        .replaceAll("[^a-zA-Z0-9]", "_")
+                                + ".json");
                         data.write(file, Config.indentLevel, 0);
                         file.flush();
                         file.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    ics.addChatMessage(new ChatComponentText("successfully dumped " + handler.getHandlerId() + " (" + handler.getRecipeName() + ")"));
+                    ics.addChatMessage(new ChatComponentText(
+                            "successfully dumped " + handler.getHandlerId() + " (" + handler.getRecipeName() + ")"));
                     break;
                 }
             }
@@ -118,6 +121,5 @@ public class RecipeDump {
         }
 
         GuineaUtil.info("All recipehandlers dumped.");
-
     }
 }

@@ -16,6 +16,7 @@ public class ThaumcraftInfusionDumper implements IRecipeDumper {
     public String getDumperId() {
         return "tc_infusion";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof InfusionRecipeHandler;
@@ -34,11 +35,11 @@ public class ThaumcraftInfusionDumper implements IRecipeDumper {
                     continue;
                 }
                 JSONObject jsonRecipe = new JSONObject()
-                    .put("research", recipe.getResearch())
-                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects(recipe.getRecipeInput())))
-                    .put("instability", recipe.getInstability(recipe.getRecipeInput()))
-                    .put("input", JSONUtil.encodeItemStack(recipe.getRecipeInput()))
-                    .put("components", JSONUtil.encodeItemStackArray(recipe.getComponents()));
+                        .put("research", recipe.getResearch())
+                        .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects(recipe.getRecipeInput())))
+                        .put("instability", recipe.getInstability(recipe.getRecipeInput()))
+                        .put("input", JSONUtil.encodeItemStack(recipe.getRecipeInput()))
+                        .put("components", JSONUtil.encodeItemStackArray(recipe.getComponents()));
 
                 Object output = recipe.getRecipeOutput(recipe.getRecipeInput());
                 if (output instanceof ItemStack) {
@@ -63,8 +64,8 @@ public class ThaumcraftInfusionDumper implements IRecipeDumper {
         }
 
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

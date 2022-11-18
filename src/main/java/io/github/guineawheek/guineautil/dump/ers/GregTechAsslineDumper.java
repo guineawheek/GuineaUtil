@@ -15,6 +15,7 @@ public class GregTechAsslineDumper implements IRecipeDumper {
     public String getDumperId() {
         return "gt_assline";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof GT_NEI_AssLineHandler;
@@ -51,7 +52,6 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 jsonRecipe.put("specialItem", JSONUtil.encodeItemStack((ItemStack) recipe.mSpecialItems));
             }
 
-
             JSONArray jsonInputs = new JSONArray();
             for (int i = 0; i < recipe.mInputs.length; i++) {
                 Object input;
@@ -63,7 +63,7 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 if (input == null) continue;
                 if (input instanceof ItemStack[]) {
                     jsonInputs.put(JSONUtil.encodeItemStackArray((ItemStack[]) input));
-                } else if (input instanceof ItemStack){
+                } else if (input instanceof ItemStack) {
                     jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) input)));
                 }
             }
@@ -76,10 +76,7 @@ public class GregTechAsslineDumper implements IRecipeDumper {
                 if (output == null) continue;
                 // scale is hundredths of a percent.
                 // 10000 is 100% chance
-                jsonOutputs.put(
-                    JSONUtil.encodeItemStack(output)
-                        .put("chance", recipe.getOutputChance(i))
-                );
+                jsonOutputs.put(JSONUtil.encodeItemStack(output).put("chance", recipe.getOutputChance(i)));
             }
             jsonRecipe.put("outputs", jsonOutputs);
 
@@ -93,10 +90,9 @@ public class GregTechAsslineDumper implements IRecipeDumper {
             allRecipes.put(jsonRecipe);
         }
 
-
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

@@ -3,13 +3,12 @@ package io.github.guineawheek.guineautil.dump.ers;
 import codechicken.nei.recipe.ICraftingHandler;
 import com.djgiannuzz.thaumcraftneiplugin.nei.recipehandler.ArcaneShapelessRecipeHandler;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
+import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.crafting.ShapelessArcaneRecipe;
-
-import java.util.ArrayList;
 
 public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
 
@@ -17,6 +16,7 @@ public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
     public String getDumperId() {
         return "tc_shapeless";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof ArcaneShapelessRecipeHandler;
@@ -31,14 +31,16 @@ public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
             if (o instanceof ShapelessArcaneRecipe) {
                 ShapelessArcaneRecipe recipe = (ShapelessArcaneRecipe) o;
                 JSONObject jsonRecipe = new JSONObject()
-                    .put("research", recipe.getResearch())
-                    .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput()))
-                    .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()));
-                if (recipe.getRecipeOutput() == null || recipe.getInput() == null || recipe.getInput().size() < 1) {
+                        .put("research", recipe.getResearch())
+                        .put("output", JSONUtil.encodeItemStack(recipe.getRecipeOutput()))
+                        .put("aspects", JSONUtil.encodeAspectList(recipe.getAspects()));
+                if (recipe.getRecipeOutput() == null
+                        || recipe.getInput() == null
+                        || recipe.getInput().size() < 1) {
                     continue;
                 }
                 JSONArray jsonInputs = new JSONArray();
-                for (Object ri: recipe.getInput()) {
+                for (Object ri : recipe.getInput()) {
                     if (ri instanceof ItemStack) {
                         jsonInputs.put(new JSONArray().put(JSONUtil.encodeItemStack((ItemStack) ri)));
                     } else if (ri instanceof ArrayList) {
@@ -50,10 +52,9 @@ public class ThaumcraftShapelessWorktableDumper implements IRecipeDumper {
             }
         }
 
-
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

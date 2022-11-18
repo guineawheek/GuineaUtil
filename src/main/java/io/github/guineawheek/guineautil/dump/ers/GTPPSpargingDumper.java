@@ -14,6 +14,7 @@ public class GTPPSpargingDumper implements IRecipeDumper {
     public String getDumperId() {
         return "gtpp_sparge";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof GT_NEI_LFTR_Sparging;
@@ -50,10 +51,9 @@ public class GTPPSpargingDumper implements IRecipeDumper {
             allRecipes.put(jsonRecipe);
         }
 
-
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }

@@ -1,6 +1,10 @@
 package io.github.guineawheek.guineautil.dump;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
+
 import io.github.guineawheek.guineautil.GuineaUtil;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
@@ -10,12 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 public class JSONUtil {
     /*
@@ -32,14 +30,14 @@ public class JSONUtil {
      */
     public static JSONObject encodeItemStack(ItemStack stack) {
         String name = Item.itemRegistry.getNameForObject(stack.getItem());
-        JSONObject jsonObject =  new JSONObject()
-            .put("name", name)
-            .put("damage", stack.getItemDamage())
-            .put("maxDamage", stack.getMaxDamage())
-            .put("size", stack.stackSize)
-            .put("maxSize", stack.getMaxStackSize())
-            .put("oreNames", getOreNames(stack))
-            .put("tag", (stack.hasTagCompound()) ? encodeTagCompound(stack.getTagCompound()) : null);
+        JSONObject jsonObject = new JSONObject()
+                .put("name", name)
+                .put("damage", stack.getItemDamage())
+                .put("maxDamage", stack.getMaxDamage())
+                .put("size", stack.stackSize)
+                .put("maxSize", stack.getMaxStackSize())
+                .put("oreNames", getOreNames(stack))
+                .put("tag", (stack.hasTagCompound()) ? encodeTagCompound(stack.getTagCompound()) : null);
 
         try {
             jsonObject.put("label", stack.getDisplayName());
@@ -63,23 +61,21 @@ public class JSONUtil {
 
     public static JSONArray encodeItemStackArray(ItemStack[] stacks) {
         JSONArray out = new JSONArray();
-        for (ItemStack stack : stacks)
-            out.put(encodeItemStack(stack));
+        for (ItemStack stack : stacks) out.put(encodeItemStack(stack));
         return out;
     }
 
     public static JSONArray encodeItemStackList(List<ItemStack> stacks) {
         JSONArray out = new JSONArray();
-        for (ItemStack stack : stacks)
-            out.put(encodeItemStack(stack));
+        for (ItemStack stack : stacks) out.put(encodeItemStack(stack));
         return out;
     }
 
     public static JSONObject encodeFluidStack(FluidStack stack) {
         return new JSONObject()
-            .put("name", stack.getFluid().getName())
-            .put("label", stack.getFluid().getLocalizedName(null))
-            .put("amount", stack.amount);
+                .put("name", stack.getFluid().getName())
+                .put("label", stack.getFluid().getLocalizedName(null))
+                .put("amount", stack.amount);
     }
 
     public static Object encodeNullable(Object obj) {
@@ -108,7 +104,6 @@ public class JSONUtil {
      * @param tag any NBT object
      * @return something toStringable sanely in json
      */
-
     public static Object encodeNBT(NBTBase tag) {
         if (tag instanceof NBTTagByte) return ((NBTTagByte) tag).func_150290_f();
         else if (tag instanceof NBTTagShort) return ((NBTTagShort) tag).func_150289_e();
@@ -126,26 +121,21 @@ public class JSONUtil {
 
     public static JSONObject encodeTagCompound(NBTTagCompound tag) {
         JSONObject out = new JSONObject();
-        for (Object key : tag.func_150296_c())
-            out.put(key.toString(), encodeNBT(tag.getTag(key.toString())));
+        for (Object key : tag.func_150296_c()) out.put(key.toString(), encodeNBT(tag.getTag(key.toString())));
         return out;
     }
 
     public static JSONArray encodeTagList(NBTTagList tagList) {
         JSONArray out = new JSONArray();
         NBTTagList copy = (NBTTagList) tagList.copy();
-        for (int i = 0; i < tagList.tagCount(); i++)
-            out.put(copy.removeTag(0));
+        for (int i = 0; i < tagList.tagCount(); i++) out.put(copy.removeTag(0));
         return out;
     }
 
     public static JSONArray encodeAspectList(AspectList aspectList) {
         JSONArray out = new JSONArray();
         for (Aspect aspect : aspectList.aspects.keySet()) {
-            out.put(new JSONObject()
-                .put("aspect", aspect.getTag())
-                .put("amount", aspectList.getAmount(aspect))
-            );
+            out.put(new JSONObject().put("aspect", aspect.getTag()).put("amount", aspectList.getAmount(aspect)));
         }
         return out;
     }

@@ -1,14 +1,9 @@
 package io.github.guineawheek.guineautil.dump.ers.forestry;
 
-import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.ICraftingHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.fuels.FermenterFuel;
 import forestry.api.fuels.FuelManager;
-import forestry.api.recipes.IFabricatorRecipe;
-import forestry.api.recipes.IFermenterRecipe;
-import forestry.api.recipes.RecipeManagers;
-import forestry.factory.recipes.nei.NEIHandlerFabricator;
 import forestry.factory.recipes.nei.NEIHandlerFermenter;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import io.github.guineawheek.guineautil.dump.ers.IRecipeDumper;
@@ -20,10 +15,12 @@ public class FermenterDumper implements IRecipeDumper {
     public String getDumperId() {
         return "forestry_machine";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof NEIHandlerFermenter;
     }
+
     @Override
     public JSONObject dump(ICraftingHandler handler) {
 
@@ -31,15 +28,19 @@ public class FermenterDumper implements IRecipeDumper {
         JSONArray allRecipes = new JSONArray();
         ((NEIHandlerFermenter) handler).loadAllRecipes();
 
-        for (TemplateRecipeHandler.CachedRecipe crecipe : ((NEIHandlerFermenter)handler).arecipes) {
+        for (TemplateRecipeHandler.CachedRecipe crecipe : ((NEIHandlerFermenter) handler).arecipes) {
             NEIHandlerFermenter.CachedFermenterRecipe recipe = (NEIHandlerFermenter.CachedFermenterRecipe) crecipe;
             JSONObject jsonRecipe = new JSONObject();
             jsonRecipe.put("inputItem", JSONUtil.encodeItemStackArray(recipe.inputItems.get(0).items));
             if (recipe.tanks.size() > 0) {
-                jsonRecipe.put("inputFluid", JSONUtil.encodeFluidStack(recipe.tanks.get(0).tank.getFluid()));
+                jsonRecipe.put(
+                        "inputFluid",
+                        JSONUtil.encodeFluidStack(recipe.tanks.get(0).tank.getFluid()));
             }
             if (recipe.tanks.size() > 1) {
-                jsonRecipe.put("output", JSONUtil.encodeFluidStack(recipe.tanks.get(1).tank.getFluid()));
+                jsonRecipe.put(
+                        "output",
+                        JSONUtil.encodeFluidStack(recipe.tanks.get(1).tank.getFluid()));
             }
             allRecipes.put(jsonRecipe);
         }
@@ -50,10 +51,9 @@ public class FermenterDumper implements IRecipeDumper {
         }
 
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes)
-            .put("fuels", allFuels);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes)
+                .put("fuels", allFuels);
     }
-
 }

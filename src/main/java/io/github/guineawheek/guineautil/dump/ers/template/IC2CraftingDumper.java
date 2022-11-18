@@ -10,6 +10,7 @@ public class IC2CraftingDumper extends TemplateRecipeHandlerDumper {
     public String getDumperId() {
         return "shaped_ic2_crafting";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         // logic should be identical

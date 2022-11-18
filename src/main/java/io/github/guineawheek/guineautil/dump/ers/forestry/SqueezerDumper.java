@@ -1,10 +1,8 @@
 package io.github.guineawheek.guineautil.dump.ers.forestry;
 
 import codechicken.nei.recipe.ICraftingHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.recipes.ISqueezerRecipe;
 import forestry.api.recipes.RecipeManagers;
-import forestry.factory.recipes.nei.NEIHandlerFermenter;
 import forestry.factory.recipes.nei.NEIHandlerSqueezer;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
 import io.github.guineawheek.guineautil.dump.ers.IRecipeDumper;
@@ -16,10 +14,12 @@ public class SqueezerDumper implements IRecipeDumper {
     public String getDumperId() {
         return "forestry_machine";
     }
+
     @Override
     public boolean claim(ICraftingHandler handler) {
         return handler instanceof NEIHandlerSqueezer;
     }
+
     @Override
     public JSONObject dump(ICraftingHandler handler) {
 
@@ -27,9 +27,9 @@ public class SqueezerDumper implements IRecipeDumper {
         JSONArray allRecipes = new JSONArray();
         for (ISqueezerRecipe recipe : RecipeManagers.squeezerManager.recipes()) {
             JSONObject jsonRecipe = new JSONObject()
-                .put("processingTime", recipe.getProcessingTime())
-                .put("fluidOutput", JSONUtil.encodeNullable(recipe.getFluidOutput()))
-                .put("inputs", JSONUtil.encodeNullable(recipe.getResources()));
+                    .put("processingTime", recipe.getProcessingTime())
+                    .put("fluidOutput", JSONUtil.encodeNullable(recipe.getFluidOutput()))
+                    .put("inputs", JSONUtil.encodeNullable(recipe.getResources()));
 
             if (recipe.getRemnants() != null) {
                 jsonRecipe.put("remnants", JSONUtil.encodeItemStack(recipe.getRemnants()));
@@ -42,11 +42,9 @@ public class SqueezerDumper implements IRecipeDumper {
             allRecipes.put(jsonRecipe);
         }
 
-
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
-
 }

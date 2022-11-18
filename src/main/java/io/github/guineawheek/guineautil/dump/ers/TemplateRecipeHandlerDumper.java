@@ -6,10 +6,9 @@ import codechicken.nei.recipe.ShapedRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import io.github.guineawheek.guineautil.GuineaUtil;
 import io.github.guineawheek.guineautil.dump.JSONUtil;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.List;
 
 public abstract class TemplateRecipeHandlerDumper implements IRecipeDumper {
     /*
@@ -33,14 +32,12 @@ public abstract class TemplateRecipeHandlerDumper implements IRecipeDumper {
             JSONObject out = new JSONObject();
             out.put("outputs", JSONUtil.encodeItemStackArray(recipe.getResult().items));
 
-
             JSONArray ingArray = new JSONArray();
             List<PositionedStack> stacks = recipe.getIngredients();
             boolean isOreDict = false;
 
-            for (PositionedStack stack: stacks) {
-                if (stack.items.length > 1)
-                    isOreDict = true;
+            for (PositionedStack stack : stacks) {
+                if (stack.items.length > 1) isOreDict = true;
 
                 JSONObject ingStack = new JSONObject().put("stack", JSONUtil.encodeItemStackArray(stack.items));
                 if (h instanceof ShapedRecipeHandler) {
@@ -51,14 +48,13 @@ public abstract class TemplateRecipeHandlerDumper implements IRecipeDumper {
             out.put("inputs", ingArray);
             out.put("isOreDict", isOreDict);
 
-            if (GuineaUtil.DEBUG)
-                GuineaUtil.info(out.toString());
+            if (GuineaUtil.DEBUG) GuineaUtil.info(out.toString());
             allRecipes.put(out);
         }
 
         return new JSONObject()
-            .put("type", handler.getRecipeName())
-            .put("handlerID", handler.getHandlerId())
-            .put("recipes", allRecipes);
+                .put("type", handler.getRecipeName())
+                .put("handlerID", handler.getHandlerId())
+                .put("recipes", allRecipes);
     }
 }
