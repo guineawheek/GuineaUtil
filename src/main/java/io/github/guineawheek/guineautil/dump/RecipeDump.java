@@ -93,11 +93,19 @@ public class RecipeDump {
 
         GuineaUtil.info("NEI crafting handlers: ");
         for (ICraftingHandler handler : handlers) {
+            boolean shouldDump = true;
+            for (String hID : Config.handlerBlacklist) {
+                if (handler.getHandlerId().equals(hID)) {
+                    shouldDump = false;
+                    GuineaUtil.info("Blacklisted: " + handler.getHandlerId() + " " + handler.getRecipeName());
+                }
+            }
+            if (!shouldDump) continue;
 
             boolean dumped = false;
             for (IRecipeDumper dumper : dumpers) {
                 if (dumper.claim(handler)) {
-                    GuineaUtil.info("Dumping: " + handler.getHandlerId() + " " + handler.getRecipeName());
+                    GuineaUtil.info("Dumping: " + handler.getHandlerId() + " (" + handler.getRecipeName() + ")");
                     JSONObject data;
                     try {
                         data = dumper.dump(handler);
